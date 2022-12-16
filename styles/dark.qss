@@ -1,0 +1,81 @@
+QWidget {
+	color: white;
+	background: #474747;
+}
+QAbstractButton {
+	color: white;
+	border-style: outset;
+	border-radius: 4px;
+	border-width: 1px;
+	border-color: #666666;
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
+}
+QAbstractButton:focus{
+	border-color: rgb(32, 138, 212);
+}
+QAbstractButton:hover {
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#707070, stop: 1  #606060);
+}
+QAbstractButton:pressed {
+	border-color: #424242;
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#424242, stop: 1  #515151);
+}
+QLineEdit{
+	background: #151515;
+	border-color: black;
+	border: 0px solid black;
+}
+QLineEdit {
+	border-radius: 4px;
+}
+QLineEdit[readOnly="true"] {
+	background: #303030;
+}
+QFrame {
+	background: rgba(0, 0, 0, 0);
+}
+QAbstractScrollArea {
+	background: #202020;
+}
+QGroupBox {
+	background: rgba(0, 0, 0, 0);
+}
+QHeaderView:section {
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#353535, stop: 1  #202020);
+	border-color: black;
+	border: 1px solid black;
+	text-align: center;
+	padding-left: 4px;
+}
+QCheckBox {
+	background: rgba(0, 0, 0, 0);
+	border-radius: 0px;
+	border: 0px;
+	border-color: rgba(0, 0, 0, 0);
+}
+QCheckBox:hover {
+	background: rgba(0, 0, 0, 0);
+}
+QCheckBox::indicator {
+	width: 16px;
+	height: 16px;
+	background: white;
+	border-radius: 2px;
+	border: 1px solid #272727;
+}
+QCheckBox::indicator:checked {
+	background: #666666;
+}
+QComboBox {
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
+	border-radius: 4px;
+	border: 1px solid #666666;
+}
+QComboBox:drop-down {
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
+	border-radius: 2px;
+	width: 20%;
+}
+QComboBox:down-arrow {
+	background: #676767;
+}

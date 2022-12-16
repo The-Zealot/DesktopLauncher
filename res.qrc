@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/.res">
+        <file>image/backgroundImage.png</file>
+        <file>info/todo.txt</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,31 @@
+QWidget {
+	color: white;
+	background: #474747;
+}
+QAbstractButton {
+	color: white;
+	border-style: outset;
+	border-radius: 4px;
+	border-width: 1px;
+	border-color: #848484;
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
+}
+QAbstractButton:focus{
+	border-color: rgb(32, 138, 212);
+}
+QAbstractButton:hover {
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#707070, stop: 1  #606060);
+}
+QAbstractButton:pressed {
+	border-color: #424242;
+	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#424242, stop: 1  #515151);
+}
+QLineEdit{
+	background: #303030;
+}
+QFrame {
+	background: rgba(0, 0, 0, 0);
+}
+QLayout {
+	background: rgba(0, 0, 0, 0);
+}

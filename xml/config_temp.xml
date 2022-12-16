@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<property>
+</property>
+<group>
+	<mode id="autostart" value="false"></mode>
+	<mode id="fullscreen" value="false"></mode>
+	<mode id="button-icons" value="true"></mode>
+	<mode id="default-background" value="true"></mode>
+</group>
+<file id="wallpaper" path="C:/Users/User/Download/chevrolet1920x1080.jpeg"></file>
+<style id="styleSheet" path="./styles/dark.css">Dark</style>

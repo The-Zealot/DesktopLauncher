@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<games>
+	<dir name="Horror">
+		<link path="D:/Games/Outlast/game.exe" default="false" icon="C:/Users/User/Downloads/IconPack/7581.png">Outlast 2</link>
+		<link path="D:/Games/DeadSpace/DeadSpace II/DeadSpace.exe" default="false" icon="C:/Users/User/Downloads/IconPack/18581.png">DeadSpace 2</link>
+		<link path="D:/Games/DeadSpace/DeadSpace/Start.exe" default="false" icon="C:/Users/User/Downloads/IconPack/2822.png">DeadSpace</link>
+	</dir>
+	<dir name="Shooter">
+		<link path="E:/Хлам/Новая Папка/CS GO.lnk" default="false" icon="E:/Хлам/Иконки/cs.jpg">CS:GO</link>
+		<link path="D:/Halo/Halo IV/bin/halo.exe" default="true" icon="">Halo</link>
+	</dir>
+	<dir name="RTS">
+		<link path="E:/Хлам/Новая Папка/StarCraft/SC/StarCraft.lnk" default="false" icon="C:/Users/User/Downloads/IconPack/11039.png">StarCraft II</link>
+		<link path="D:/Games/Warcraft III/warcraft.exe" default="true" icon="">Warcraft III</link>
+		<link path="D:/Games/Civilazation/Civilazation V/directx11.exe" default="true" icon="">Civilazation V</link>
+	</dir>
+</games>
+<programs>
+	<dir name="Browser">
+		<link path="C:/Program Files/Opera/opera.exe" default="false" icon="C:/Program Files/Opera/Opera.png">Opera</link>
+	</dir>
+</programs>
