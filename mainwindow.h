@@ -12,6 +12,7 @@
 #include <QJsonValue>
 #include <QJsonDocument>
 #include <QLabel>
+#include <QDesktopServices>
 
 #include "optionsform.h"
 #include "filecontainer.h"
@@ -40,6 +41,8 @@ private slots:
     void on_updateButton_clicked();
 
     void showTODO();
+
+    void linkClicked();
 
     void on_gameButton_clicked();
 

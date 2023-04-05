@@ -86,8 +86,6 @@ MainWindow::~MainWindow()
     delete tree;
 }
 
-////////////// privte methods //////////////
-
 void MainWindow::updateTree()
 {
     /*model = new QFileSystemModel;
@@ -142,6 +140,14 @@ void MainWindow::showTODO()
     file.close();
 }
 
+void MainWindow::linkClicked()
+{
+    QPushButton* sender = qobject_cast<QPushButton*>(this->sender());
+
+    QDesktopServices::openUrl(QUrl("file:///" + sender->toolTip()));
+    qDebug() << sender->toolTip();
+}
+
 void MainWindow::createLink(QPoint position, const QString text, const QString path)
 {
     QPushButton* temp = new QPushButton(ui->workspacePanel);
@@ -150,7 +156,7 @@ void MainWindow::createLink(QPoint position, const QString text, const QString p
     temp->setVisible(true);
     temp->setText(text);
     temp->setToolTip(path);
-    //temp->connect()
+    temp->connect(temp, &QPushButton::clicked, this, &MainWindow::linkClicked);
 
     links.push_back(temp);
 }
@@ -180,14 +186,10 @@ void MainWindow::openDir(const QModelIndex &index)
     }
 }
 
-////////////////// slots /////////////////////
-
-
 void MainWindow::on_closeButton_clicked()
 {
     this->close();
 }
-
 
 void MainWindow::on_fullScreenButton_clicked()
 {
@@ -218,7 +220,6 @@ void MainWindow::on_settingButton_clicked()
     optionsForm->show();
 }
 
-
 void MainWindow::on_fileManagerButton_clicked()
 {
 //    QMessageBox::information(this, "In development", "Данный модуль находится в разработке");
@@ -235,7 +236,6 @@ void MainWindow::on_fileManagerButton_clicked()
     }
 }
 
-
 void MainWindow::on_updateButton_clicked()
 {
     QFile file(QDir::currentPath() + "/styles/dark.qss");
@@ -250,8 +250,6 @@ void MainWindow::on_updateButton_clicked()
     }
 }
 
-
-
 void MainWindow::on_gameButton_clicked()
 {
     if (links.size() != 0)
@@ -263,12 +261,12 @@ void MainWindow::on_gameButton_clicked()
     {
         for (int j = 0; j < 4; ++j)
         {
-            QString temp = QString::fromStdString(std::to_string(++buttonNumber));
-            createLink(QPoint(144 * j, 32 * i), "Test " + temp, "Path " + temp);
+            QString temp = QVariant(++buttonNumber).toString();
+            QString path = "C:/Program Files/Far Manager/Far.exe";
+            createLink(QPoint(144 * j, 32 * i), "Test " + temp, path);
         }
     }
 }
-
 
 void MainWindow::on_clearButton_clicked()
 {
