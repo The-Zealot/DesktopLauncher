@@ -10,7 +10,7 @@ struct VLink
     QString icon;
     QString dirName;
 
-    bool isDefaultIcon;
+    bool isDefaultIcon = true;
 };
 
 #endif // VLINK_H
