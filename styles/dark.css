@@ -1,4 +1,8 @@
-QWidget {
+/*QWidget {
+	color: white;
+	background: #474747;
+}*/
+QDialog {
 	color: white;
 	background: #474747;
 }
@@ -21,6 +25,7 @@ QAbstractButton:pressed {
 	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#424242, stop: 1  #515151);
 }
 QLineEdit{
+	color: white;
 	background: #151515;
 	border-color: black;
 	border: 0px solid black;
@@ -30,6 +35,7 @@ QLineEdit {
 }
 QLineEdit[readOnly="true"] {
 	background: #303030;
+	color: #f0f0f0;
 }
 QFrame {
 	background: rgba(0, 0, 0, 0);
@@ -49,9 +55,10 @@ QHeaderView:section {
 }
 QCheckBox {
 	background: rgba(0, 0, 0, 0);
-	border-radius: 0px;
+	border-radius: 8px;
 	border: 0px;
 	border-color: rgba(0, 0, 0, 0);
+	color: white;
 }
 QCheckBox:hover {
 	background: rgba(0, 0, 0, 0);
@@ -59,17 +66,22 @@ QCheckBox:hover {
 QCheckBox::indicator {
 	width: 16px;
 	height: 16px;
-	background: white;
-	border-radius: 2px;
-	border: 1px solid #272727;
+	background: transparent;
+	border-radius: 9px;
+	border: 1px solid #5A5A5A;
 }
 QCheckBox::indicator:checked {
-	background: #666666;
+	background: transparent;
+	background-color: transparent;
+	image: url(./image/check.png);
+    color: white;
+    border: 1px solid #5A5A5A;
 }
 QComboBox {
 	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
 	border-radius: 4px;
 	border: 1px solid #666666;
+	color: white;
 }
 QComboBox:drop-down {
 	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
@@ -77,5 +89,23 @@ QComboBox:drop-down {
 	width: 20%;
 }
 QComboBox:down-arrow {
-	background: #676767;
+	/*background: #676767;*/
+	image: url(/image/checked.png);
+	width: 8px;
+	height: 8px;
+}
+QComboBox:item {
+	color: white;
+}
+QComboBox:item:selected {
+	color: white;
+}
+QComboBox:item:checked {
+	color: white;
+}
+QListView:item {
+	color: white;
+}
+QLabel {
+    color: white;
 }

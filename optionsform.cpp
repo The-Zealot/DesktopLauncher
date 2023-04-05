@@ -67,11 +67,11 @@ void OptionsForm::on_saveButton_clicked()
 void OptionsForm::loadStyles()
 {
     QDir dir(QDir::currentPath() + "/styles");
-    QStringList list = dir.entryList(QStringList() << "*.qss", QDir::Files);
+    QStringList list = dir.entryList(QStringList() << "*.css", QDir::Files);
 
     for (auto iter : list)
     {
-        ui->comboBoxStyles->addItem(iter.replace(".qss", ""));
+        ui->comboBoxStyles->addItem(iter.replace(".css", ""));
     }
 }
 

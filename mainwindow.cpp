@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     _wallpaper->show();
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
-    int buildNumber = 417;
+    int buildNumber = 424;
     _version = "version 2.0.2." + QVariant(buildNumber).toString();
     ui->versionLabel->setText(_version);
 
@@ -242,7 +242,7 @@ void MainWindow::on_fileManagerButton_clicked()
 
 void MainWindow::on_updateButton_clicked()
 {
-    QFile file(QDir::currentPath() + "/styles/dark.qss");
+    QFile file(QDir::currentPath() + "/styles/dark.css");
     if (!file.open(QIODevice::ReadOnly))
     {
         qDebug() << "Can't read style sheet";
