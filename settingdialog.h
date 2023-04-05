@@ -40,9 +40,9 @@ private:
 private:
     Ui::SettingDialog *ui;
 
-    QXmlStreamWriter* sWriter;
-    QXmlStreamReader* sReader;
-    QList<FileContainer> files;
+    QXmlStreamWriter* _sWriter;
+    QXmlStreamReader* _sReader;
+    QList<VLink> _links;
 };
 
 #endif // SETTINGDIALOG_H

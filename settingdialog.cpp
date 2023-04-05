@@ -14,19 +14,20 @@ SettingDialog::SettingDialog(QWidget *parent) :
 
     readFromXml("./xml/template.xml");
 
-    for (auto iter : files)
-        ui->list->addItem(iter.filePath());
+    for (auto & iter : _links)
+    {
+        ui->list->addItem(iter.name);
+        //qDebug() << iter.name << iter.dirName << iter.path << iter.isDefaultIcon << iter.icon;
+    }
 }
 
 SettingDialog::~SettingDialog()
 {
-    files.clear();
     delete ui;
 }
 
 void SettingDialog::on_backButton_clicked()
 {
-    this->parentWidget()->show();
     delete this;
 }
 
@@ -48,7 +49,7 @@ void SettingDialog::on_browseButton_clicked()
 
 void SettingDialog::on_saveButton_clicked()
 {
-    QFile file("settings.xml");
+    /*QFile file("settings.xml");
     file.open(QIODevice::ReadWrite);
 
     sWriter = new QXmlStreamWriter(&file);
@@ -81,12 +82,12 @@ void SettingDialog::on_saveButton_clicked()
     file.close();
     delete sWriter;
 
-    ui->list->addItem(ui->pathEdit->text());
+    ui->list->addItem(ui->pathEdit->text());*/
 }
 
 void SettingDialog::writeToXml(const QString fileName)
 {
-    QFile file(fileName);
+    /*QFile file(fileName);
     file.open(QIODevice::WriteOnly);
 
     sWriter = new QXmlStreamWriter(&file);
@@ -119,7 +120,7 @@ void SettingDialog::writeToXml(const QString fileName)
     file.close();
     delete sWriter;
 
-    ui->list->addItem(ui->pathEdit->text());
+    ui->list->addItem(ui->pathEdit->text());*/
 }
 
 void SettingDialog::readFromXml(const QString fileName)
@@ -153,8 +154,6 @@ void SettingDialog::readFromXml(const QString fileName)
 
 void SettingDialog::read_v1(QXmlStreamReader &sReader)
 {
-    QList<VLink> links;
-
     QString currentDir;
 
     while (!sReader.atEnd() and !sReader.hasError())
@@ -176,15 +175,9 @@ void SettingDialog::read_v1(QXmlStreamReader &sReader)
                 currentLink.name = sReader.readElementText();
                 currentLink.dirName = currentDir;
 
-                links.append(currentLink);
+                _links.append(currentLink);
             }
         }
-    }
-
-    for (auto & iter : links)
-    {
-        ui->list->addItem(iter.name);
-        //qDebug() << iter.name << iter.dirName << iter.path << iter.isDefaultIcon << iter.icon;
     }
 }
 

@@ -21,24 +21,24 @@ MainWindow::MainWindow(QWidget *parent)
 
     //on_updateButton_clicked();
 
-    movePanel = new QWidget(this);
-    movePanel->show();
-    movePanel->setGeometry(this->width() / 2 - 525 / 2, -40, 525, 60);
-    movePanel->setStyleSheet("  border-radius: 25px;    \
+    _movePanel = new QWidget(this);
+    _movePanel->show();
+    _movePanel->setGeometry(this->width() / 2 - 525 / 2, -40, 525, 60);
+    _movePanel->setStyleSheet("  border-radius: 25px;    \
                                 border-color: white;    \
                                 border-width: 1px;      \
                                 border-style: inset;    \
                                 background: #303030;");
 
-    wallpaper = new QLabel(this);
-    wallpaper->lower();
-    wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
-    wallpaper->show();
-    wallpaper->setGeometry(0, 0, this->width(), this->height());
+    _wallpaper = new QLabel(this);
+    _wallpaper->lower();
+    _wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
+    _wallpaper->show();
+    _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
     int buildNumber = 390;
-    version = "version 2.0.2." + QVariant(buildNumber).toString();
-    ui->versionLabel->setText(version);
+    _version = "version 2.0.2." + QVariant(buildNumber).toString();
+    ui->versionLabel->setText(_version);
 
     //////// init settings ////////
 
@@ -59,11 +59,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //////// init graphic form ////////
 
-    tree = new QListView(this);
-    model = new QFileSystemModel(this);
-    model->setFilter(QDir::AllDirs);
-    tree->setGeometry(10, 140, 750, 400);
-    tree->setVisible(false);
+    _tree = new QListView(this);
+    _model = new QFileSystemModel(this);
+    _model->setFilter(QDir::AllDirs);
+    _tree->setGeometry(10, 140, 750, 400);
+    _tree->setVisible(false);
     updateTree();
 
 
@@ -82,8 +82,8 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete model;
-    delete tree;
+    delete _model;
+    delete _tree;
 }
 
 void MainWindow::updateTree()
@@ -93,14 +93,14 @@ void MainWindow::updateTree()
     ui->tree->setModel(model);*/
 
     //model->setRootPath("");
-    tree->setModel(model);
+    _tree->setModel(_model);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    if (pointCointains(movePanel, mousePos) and !this->isFullScreen())
+    if (pointCointains(_movePanel, _mousePos) and !this->isFullScreen())
     {
-        const QPointF delta = event->globalPosition() - mousePos;
+        const QPointF delta = event->globalPosition() - _mousePos;
         move(delta.toPoint());
 
         event->accept();
@@ -111,7 +111,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
-        mousePos = event->pos();
+        _mousePos = event->pos();
         event->accept();
     }
 }
@@ -158,22 +158,22 @@ void MainWindow::createLink(QPoint position, const QString text, const QString p
     temp->setToolTip(path);
     temp->connect(temp, &QPushButton::clicked, this, &MainWindow::linkClicked);
 
-    links.push_back(temp);
+    _links.push_back(temp);
 }
 
 void MainWindow::openDir(const QModelIndex &index)
 {
     QListView* listView = (QListView*)sender();
-    QFileInfo fileInfo = model->fileInfo(index);
+    QFileInfo fileInfo = _model->fileInfo(index);
     if (fileInfo.fileName() == "..")
     {
         QDir dir = fileInfo.dir();
         dir.cdUp();
-        listView->setRootIndex(model->index(dir.absolutePath()));
+        listView->setRootIndex(_model->index(dir.absolutePath()));
     }
     else if (fileInfo.fileName() == ".")
     {
-        listView->setRootIndex(model->index(""));
+        listView->setRootIndex(_model->index(""));
     }
     else if (fileInfo.isDir())
     {
@@ -198,11 +198,11 @@ void MainWindow::on_fullScreenButton_clicked()
     else
         this->showNormal();
 
-    movePanel->setGeometry((this->width() - movePanel->width()) / 2, movePanel->y(),
-                                movePanel->width(), movePanel->height());
+    _movePanel->setGeometry((this->width() - _movePanel->width()) / 2, _movePanel->y(),
+                                _movePanel->width(), _movePanel->height());
 
-    wallpaper->setGeometry(0, 0, this->width(), this->height());
-    wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
+    _wallpaper->setGeometry(0, 0, this->width(), this->height());
+    _wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
 
     /*ui->boxMenu->setGeometry(this->width() - 11 - ui->boxMenu->width(), 11,
                              ui->boxMenu->width(), ui->boxMenu->height());
@@ -215,9 +215,9 @@ void MainWindow::on_fullScreenButton_clicked()
 
 void MainWindow::on_settingButton_clicked()
 {
-    optionsForm = new OptionsForm(this);
-    optionsForm->setModal(true);
-    optionsForm->show();
+    _optionsForm = new OptionsForm(this);
+    _optionsForm->setModal(true);
+    _optionsForm->show();
 }
 
 void MainWindow::on_fileManagerButton_clicked()
@@ -225,13 +225,13 @@ void MainWindow::on_fileManagerButton_clicked()
 //    QMessageBox::information(this, "In development", "Данный модуль находится в разработке");
 //    return;
 
-    if (tree->isVisible())
+    if (_tree->isVisible())
     {
-        tree->setVisible(false);
+        _tree->setVisible(false);
     }
     else
     {
-        tree->setVisible(true);
+        _tree->setVisible(true);
         updateTree();
     }
 }
@@ -252,7 +252,7 @@ void MainWindow::on_updateButton_clicked()
 
 void MainWindow::on_gameButton_clicked()
 {
-    if (links.size() != 0)
+    if (_links.size() != 0)
         return;
 
     int buttonNumber = 0;
@@ -270,9 +270,9 @@ void MainWindow::on_gameButton_clicked()
 
 void MainWindow::on_clearButton_clicked()
 {
-    for (auto iter : links)
+    for (auto iter : _links)
         delete iter;
 
-    links.clear();
-    tree->setVisible(false);
+    _links.clear();
+    _tree->setVisible(false);
 }

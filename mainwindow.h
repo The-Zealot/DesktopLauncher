@@ -60,15 +60,15 @@ private:
 
 private:
     Ui::MainWindow *ui;
-    OptionsForm* optionsForm;
-    QFileSystemModel* model;
-    QListView* tree;
-    QWidget* movePanel;
-    QLabel* wallpaper;
+    OptionsForm* _optionsForm;
+    QFileSystemModel* _model;
+    QListView* _tree;
+    QWidget* _movePanel;
+    QLabel* _wallpaper;
 
-    QList<FileContainer> files;
-    QList<QPushButton*> links;
-    QString version;
-    QPointF mousePos;
+    QList<FileContainer> _files;
+    QList<QPushButton*> _links;
+    QString _version;
+    QPointF _mousePos;
 };
 #endif // MAINWINDOW_H
