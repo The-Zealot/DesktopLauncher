@@ -6,6 +6,7 @@
 #include <QFile>
 
 #include "filecontainer.h"
+#include "vlink.h"
 
 namespace Ui {
 class SettingDialog;

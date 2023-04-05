@@ -12,7 +12,7 @@ SettingDialog::SettingDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(this->size());
 
-    readFromXml("settings.xml");
+    readFromXml("./xml/template.xml");
 
     for (auto iter : files)
         ui->list->addItem(iter.filePath());
@@ -126,20 +126,20 @@ void SettingDialog::readFromXml(const QString fileName)
 {
     QFile file(fileName);
     file.open(QIODevice::ReadOnly);
-    sReader = new QXmlStreamReader(&file);
+    QXmlStreamReader sReader(&file);
+    read_v1(sReader);
+    file.close();
 
-    QStack<FileContainer*> fileStack;
-
-        if (sReader->isStartElement())
+        /* if (sReader.isStartElement())
         {
-            if (sReader->name().toString() == "struct")
+            if (sReader.name().toString() == "struct")
             {
-                QString version = sReader->attributes().at(0).value().toString();
+                QString version = sReader.attributes().at(0).value().toString();
                 qDebug() << "Strutcure version: " << version;
 
                 if (version == "1.2")
                 {
-                    read_v1(*sReader);
+                    read_v1(sReader);
                 }
                 else
                 {
@@ -148,25 +148,43 @@ void SettingDialog::readFromXml(const QString fileName)
                 }
             }
         }
-
-
-    file.close();
-    delete sReader;
+*/
 }
 
 void SettingDialog::read_v1(QXmlStreamReader &sReader)
 {
-    while (!sReader.atEnd())
+    QList<VLink> links;
+
+    QString currentDir;
+
+    while (!sReader.atEnd() and !sReader.hasError())
     {
-        if (sReader.isStartElement() and sReader.name().toString() == "dir")
-        {
-            QString dirName = sReader.attributes().at(1).value().toString();
-            QString dirType = sReader.attributes().at(0).value().toString();
-
-            //while ()
-        }
-
         sReader.readNext();
+        if (sReader.isStartElement())
+        {
+            if (sReader.name().toString() == "dir")
+            {
+                currentDir = sReader.attributes().value("name").toString();
+                continue;
+            }
+            if (sReader.name().toString() == "link")
+            {
+                VLink currentLink;
+                currentLink.path = sReader.attributes().value("path").toString();
+                currentLink.isDefaultIcon = QVariant(sReader.attributes().value("default").toString()).toBool();
+                currentLink.icon = sReader.attributes().value("icon").toString();
+                currentLink.name = sReader.readElementText();
+                currentLink.dirName = currentDir;
+
+                links.append(currentLink);
+            }
+        }
+    }
+
+    for (auto & iter : links)
+    {
+        ui->list->addItem(iter.name);
+        //qDebug() << iter.name << iter.dirName << iter.path << iter.isDefaultIcon << iter.icon;
     }
 }
 
