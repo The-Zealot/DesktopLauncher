@@ -49,6 +49,8 @@ void SettingDialog::on_browseButton_clicked()
 
 void SettingDialog::on_saveButton_clicked()
 {
+    writeToXml("./xml/template.xml");
+
     /*QFile file("settings.xml");
     file.open(QIODevice::ReadWrite);
 
@@ -87,6 +89,38 @@ void SettingDialog::on_saveButton_clicked()
 
 void SettingDialog::writeToXml(const QString fileName)
 {
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+    QXmlStreamWriter sWriter(&file);
+
+    sWriter.setAutoFormatting(true);
+    sWriter.writeStartDocument("1.0");
+    sWriter.writeStartElement("struct");
+    sWriter.writeAttribute("version", "1.2");
+
+    for (auto & iter : _dirs)
+    {
+        sWriter.writeStartElement("dir");
+        sWriter.writeAttribute("name", iter);
+        for (auto & it : _links)
+        {
+            if (it.dirName == iter)
+            {
+                sWriter.writeStartElement("link");
+                sWriter.writeAttribute("path", it.path);
+                sWriter.writeAttribute("default", QVariant(it.isDefaultIcon).toString());
+                sWriter.writeAttribute("icon", it.icon);
+                sWriter.writeCharacters(it.name);
+                sWriter.writeEndElement();
+            }
+        }
+        sWriter.writeEndElement();
+    }
+    sWriter.writeEndElement();
+    sWriter.writeEndDocument();
+
+    file.close();
+
     /*QFile file(fileName);
     file.open(QIODevice::WriteOnly);
 
@@ -164,6 +198,7 @@ void SettingDialog::read_v1(QXmlStreamReader &sReader)
             if (sReader.name().toString() == "dir")
             {
                 currentDir = sReader.attributes().value("name").toString();
+                _dirs.insert(currentDir);
                 continue;
             }
             if (sReader.name().toString() == "link")

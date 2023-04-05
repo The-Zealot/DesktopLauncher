@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QXmlStreamWriter>
 #include <QFile>
+#include <QSet>
 
 #include "filecontainer.h"
 #include "vlink.h"
@@ -43,6 +44,7 @@ private:
     QXmlStreamWriter* _sWriter;
     QXmlStreamReader* _sReader;
     QList<VLink> _links;
+    QSet<QString> _dirs;
 };
 
 #endif // SETTINGDIALOG_H

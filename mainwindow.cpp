@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     _wallpaper->show();
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
-    int buildNumber = 390;
+    int buildNumber = 417;
     _version = "version 2.0.2." + QVariant(buildNumber).toString();
     ui->versionLabel->setText(_version);
 
@@ -54,7 +54,11 @@ MainWindow::MainWindow(QWidget *parent)
     }
     else
     {
+#ifndef QT_DEBUG
         QMessageBox::critical(this, "Error", "Reading configuration file error!");
+#else
+        qDebug() << "Reading configuration file error!";
+#endif
     }
 
     //////// init graphic form ////////
