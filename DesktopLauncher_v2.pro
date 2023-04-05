@@ -19,7 +19,8 @@ HEADERS += \
     filecontainer.h \
     mainwindow.h \
     optionsform.h \
-    settingdialog.h
+    settingdialog.h \
+    vlink.h
 
 FORMS += \
     mainwindow.ui \
