@@ -15,17 +15,30 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    img         = NULL;
-    styleSheet  = NULL;
-    model       = NULL;
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
-    //////// build counter ////////
+    this->resize(1128, 720);
 
-    int buildVersion = 0;
+    //on_updateButton_clicked();
 
-#ifdef QT_DEBUG
+    movePanel = new QWidget(this);
+    movePanel->show();
+    movePanel->setGeometry(this->width() / 2 - 525 / 2, -40, 525, 60);
+    movePanel->setStyleSheet("  border-radius: 25px;    \
+                                border-color: white;    \
+                                border-width: 1px;      \
+                                border-style: inset;    \
+                                background: #303030;");
 
-#endif
+    wallpaper = new QLabel(this);
+    wallpaper->lower();
+    wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
+    wallpaper->show();
+    wallpaper->setGeometry(0, 0, this->width(), this->height());
+
+    int buildNumber = 390;
+    version = "version 2.0.2." + QVariant(buildNumber).toString();
+    ui->versionLabel->setText(version);
 
     //////// init settings ////////
 
@@ -44,31 +57,11 @@ MainWindow::MainWindow(QWidget *parent)
         QMessageBox::critical(this, "Error", "Reading configuration file error!");
     }
 
-    qDebug() << jObject;
-
     //////// init graphic form ////////
-
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
-
-    img = new QPixmap(":/.res/image/backgroundImage.png");
-    this->resize(1128, 720);
-    ui->movePanel->setGeometry(this->width() / 2 - 525 / 2, -40, 525, 60);
-
-    //styleSheet = new QFile("D:/Qt/QtProjects/DesktopLauncher/styles/dark.qss");
-    styleSheet = new QFile(QDir::currentPath() + "/styles/dark.qss");
-    styleSheet->open(QFile::ReadOnly);
-    this->setStyleSheet(styleSheet->readAll());
-    styleSheet->close();
-
-    version = "version 0.0.2.360";
-    ui->versionLabel->setText(version);
-
-    ui->testImg->setPixmap(*img);
-    ui->testImg->setGeometry(this->geometry());
 
     tree = new QListView(this);
     model = new QFileSystemModel(this);
-    model->setFilter(QDir::QDir::AllEntries);
+    model->setFilter(QDir::AllDirs);
     tree->setGeometry(10, 140, 750, 400);
     tree->setVisible(false);
     updateTree();
@@ -76,25 +69,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     ////// Temp geometry (TODO) //////
 
-    ui->boxMenu->setGeometry(this->width() - ui->boxMenu->width(), 11,
+    /*ui->boxMenu->setGeometry(this->width() - ui->boxMenu->width(), 11,
                              ui->boxMenu->width(), ui->boxMenu->height());
 
     ui->signatureBox->setGeometry(this->width() - 11 - ui->signatureBox->width(),
                                   this->height() - 11 - ui->signatureBox->height(),
                                   ui->signatureBox->width(), ui->signatureBox->height());
 
-    ui->movePanel->lower();
-    ui->testImg->lower();
-
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(showTODO()));
-    connect(tree, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openDir(QModelIndex)));
+    connect(tree, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openDir(QModelIndex)));*/
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete img;
-    delete styleSheet;
     delete model;
     delete tree;
 }
@@ -107,13 +94,13 @@ void MainWindow::updateTree()
     model->setRootPath(QDir::currentPath());
     ui->tree->setModel(model);*/
 
-    model->setRootPath("");
+    //model->setRootPath("");
     tree->setModel(model);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    if (pointCointains(ui->movePanel, mousePos) and !this->isFullScreen())
+    if (pointCointains(movePanel, mousePos) and !this->isFullScreen())
     {
         const QPointF delta = event->globalPosition() - mousePos;
         move(delta.toPoint());
@@ -209,17 +196,18 @@ void MainWindow::on_fullScreenButton_clicked()
     else
         this->showNormal();
 
-    ui->testImg->resize(this->size());
-    ui->testImg->setGeometry(0, 0, this->width(), this->height());
-    ui->movePanel->setGeometry((this->width() - ui->movePanel->width()) / 2, ui->movePanel->y(),
-                                ui->movePanel->width(), ui->movePanel->height());
+    movePanel->setGeometry((this->width() - movePanel->width()) / 2, movePanel->y(),
+                                movePanel->width(), movePanel->height());
 
-    ui->boxMenu->setGeometry(this->width() - 11 - ui->boxMenu->width(), 11,
+    wallpaper->setGeometry(0, 0, this->width(), this->height());
+    wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
+
+    /*ui->boxMenu->setGeometry(this->width() - 11 - ui->boxMenu->width(), 11,
                              ui->boxMenu->width(), ui->boxMenu->height());
 
     ui->signatureBox->setGeometry(this->width() - 11 - ui->signatureBox->width(),
                                   this->height() - 11 - ui->signatureBox->height(),
-                                  ui->signatureBox->width(), ui->signatureBox->height());
+                                  ui->signatureBox->width(), ui->signatureBox->height());*/
 
 }
 
@@ -233,8 +221,8 @@ void MainWindow::on_settingButton_clicked()
 
 void MainWindow::on_fileManagerButton_clicked()
 {
-    QMessageBox::information(this, "In development", "Данный модуль находится в разработке");
-    return;
+//    QMessageBox::information(this, "In development", "Данный модуль находится в разработке");
+//    return;
 
     if (tree->isVisible())
     {
@@ -250,9 +238,16 @@ void MainWindow::on_fileManagerButton_clicked()
 
 void MainWindow::on_updateButton_clicked()
 {
-    styleSheet->open(QFile::ReadOnly);
-    this->setStyleSheet(styleSheet->readAll());
-    styleSheet->close();
+    QFile file(QDir::currentPath() + "/styles/dark.qss");
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Can't read style sheet";
+    }
+    else
+    {
+        this->setStyleSheet(file.readAll());
+        file.close();
+    }
 }
 
 

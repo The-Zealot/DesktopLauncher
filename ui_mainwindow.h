@@ -16,6 +16,8 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -25,7 +27,14 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QLabel *testImg;
+    QGridLayout *gridLayout;
+    QFrame *signatureBox;
+    QVBoxLayout *verticalLayout_3;
+    QLabel *versionLabel;
+    QLabel *label;
+    QScrollArea *workspacePanel;
+    QWidget *scrollAreaWidgetContents;
+    QSpacerItem *verticalSpacer;
     QFrame *boxNav;
     QVBoxLayout *verticalLayout;
     QPushButton *gameButton;
@@ -40,116 +49,19 @@ public:
     QPushButton *clearButton;
     QPushButton *trashButton;
     QPushButton *updateButton;
-    QWidget *movePanel;
-    QFrame *signatureBox;
-    QVBoxLayout *verticalLayout_3;
-    QLabel *versionLabel;
-    QLabel *label;
-    QPushButton *pushButton;
-    QFrame *workspacePanel;
-    QGridLayout *gridLayout;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(952, 612);
+        MainWindow->resize(947, 551);
         MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        testImg = new QLabel(centralwidget);
-        testImg->setObjectName(QString::fromUtf8("testImg"));
-        testImg->setGeometry(QRect(20, 550, 168, 16));
-        testImg->setAutoFillBackground(false);
-        testImg->setScaledContents(true);
-        boxNav = new QFrame(centralwidget);
-        boxNav->setObjectName(QString::fromUtf8("boxNav"));
-        boxNav->setGeometry(QRect(11, 11, 152, 122));
-        boxNav->setFrameShape(QFrame::StyledPanel);
-        boxNav->setFrameShadow(QFrame::Raised);
-        verticalLayout = new QVBoxLayout(boxNav);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        gameButton = new QPushButton(boxNav);
-        gameButton->setObjectName(QString::fromUtf8("gameButton"));
-        gameButton->setMinimumSize(QSize(128, 28));
-        gameButton->setStyleSheet(QString::fromUtf8(""));
-
-        verticalLayout->addWidget(gameButton);
-
-        programButton = new QPushButton(boxNav);
-        programButton->setObjectName(QString::fromUtf8("programButton"));
-        programButton->setMinimumSize(QSize(128, 28));
-
-        verticalLayout->addWidget(programButton);
-
-        settingButton = new QPushButton(boxNav);
-        settingButton->setObjectName(QString::fromUtf8("settingButton"));
-        settingButton->setMinimumSize(QSize(128, 28));
-        settingButton->setStyleSheet(QString::fromUtf8(""));
-
-        verticalLayout->addWidget(settingButton);
-
-        boxMenu = new QFrame(centralwidget);
-        boxMenu->setObjectName(QString::fromUtf8("boxMenu"));
-        boxMenu->setGeometry(QRect(770, 10, 168, 281));
-        boxMenu->setFrameShape(QFrame::StyledPanel);
-        boxMenu->setFrameShadow(QFrame::Raised);
-        verticalLayout_2 = new QVBoxLayout(boxMenu);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        fullScreenButton = new QPushButton(boxMenu);
-        fullScreenButton->setObjectName(QString::fromUtf8("fullScreenButton"));
-        fullScreenButton->setMinimumSize(QSize(144, 32));
-
-        verticalLayout_2->addWidget(fullScreenButton);
-
-        closeButton = new QPushButton(boxMenu);
-        closeButton->setObjectName(QString::fromUtf8("closeButton"));
-        closeButton->setMinimumSize(QSize(144, 32));
-
-        verticalLayout_2->addWidget(closeButton);
-
-        fileManagerButton = new QPushButton(boxMenu);
-        fileManagerButton->setObjectName(QString::fromUtf8("fileManagerButton"));
-        fileManagerButton->setMinimumSize(QSize(144, 32));
-        fileManagerButton->setBaseSize(QSize(144, 32));
-
-        verticalLayout_2->addWidget(fileManagerButton);
-
-        dirDlgButton = new QPushButton(boxMenu);
-        dirDlgButton->setObjectName(QString::fromUtf8("dirDlgButton"));
-        dirDlgButton->setMinimumSize(QSize(144, 32));
-
-        verticalLayout_2->addWidget(dirDlgButton);
-
-        clearButton = new QPushButton(boxMenu);
-        clearButton->setObjectName(QString::fromUtf8("clearButton"));
-        clearButton->setMinimumSize(QSize(144, 32));
-
-        verticalLayout_2->addWidget(clearButton);
-
-        trashButton = new QPushButton(boxMenu);
-        trashButton->setObjectName(QString::fromUtf8("trashButton"));
-        trashButton->setMinimumSize(QSize(144, 32));
-
-        verticalLayout_2->addWidget(trashButton);
-
-        updateButton = new QPushButton(boxMenu);
-        updateButton->setObjectName(QString::fromUtf8("updateButton"));
-        updateButton->setMinimumSize(QSize(144, 32));
-
-        verticalLayout_2->addWidget(updateButton);
-
-        movePanel = new QWidget(centralwidget);
-        movePanel->setObjectName(QString::fromUtf8("movePanel"));
-        movePanel->setGeometry(QRect(200, -40, 521, 61));
-        movePanel->setStyleSheet(QString::fromUtf8("border-radius: 25px;\n"
-"border-color: white;\n"
-"border-width: 1px;\n"
-"border-style: inset;\n"
-"background: #303030;"));
+        gridLayout = new QGridLayout(centralwidget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         signatureBox = new QFrame(centralwidget);
         signatureBox->setObjectName(QString::fromUtf8("signatureBox"));
-        signatureBox->setGeometry(QRect(830, 540, 109, 61));
         signatureBox->setFrameShape(QFrame::StyledPanel);
         signatureBox->setFrameShadow(QFrame::Raised);
         verticalLayout_3 = new QVBoxLayout(signatureBox);
@@ -185,17 +97,135 @@ public:
 
         verticalLayout_3->addWidget(label);
 
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(190, 40, 80, 25));
-        workspacePanel = new QFrame(centralwidget);
+
+        gridLayout->addWidget(signatureBox, 5, 3, 1, 1);
+
+        workspacePanel = new QScrollArea(centralwidget);
         workspacePanel->setObjectName(QString::fromUtf8("workspacePanel"));
-        workspacePanel->setGeometry(QRect(10, 140, 751, 401));
-        workspacePanel->setFrameShape(QFrame::StyledPanel);
-        workspacePanel->setFrameShadow(QFrame::Raised);
-        gridLayout = new QGridLayout(workspacePanel);
-        gridLayout->setSpacing(12);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        workspacePanel->setFrameShape(QFrame::NoFrame);
+        workspacePanel->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 750, 400));
+        workspacePanel->setWidget(scrollAreaWidgetContents);
+
+        gridLayout->addWidget(workspacePanel, 1, 0, 5, 2);
+
+        verticalSpacer = new QSpacerItem(20, 166, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 4, 3, 1, 1);
+
+        boxNav = new QFrame(centralwidget);
+        boxNav->setObjectName(QString::fromUtf8("boxNav"));
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(boxNav->sizePolicy().hasHeightForWidth());
+        boxNav->setSizePolicy(sizePolicy1);
+        boxNav->setFrameShape(QFrame::StyledPanel);
+        boxNav->setFrameShadow(QFrame::Raised);
+        verticalLayout = new QVBoxLayout(boxNav);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        gameButton = new QPushButton(boxNav);
+        gameButton->setObjectName(QString::fromUtf8("gameButton"));
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(gameButton->sizePolicy().hasHeightForWidth());
+        gameButton->setSizePolicy(sizePolicy2);
+        gameButton->setMinimumSize(QSize(128, 28));
+        gameButton->setStyleSheet(QString::fromUtf8(""));
+
+        verticalLayout->addWidget(gameButton);
+
+        programButton = new QPushButton(boxNav);
+        programButton->setObjectName(QString::fromUtf8("programButton"));
+        sizePolicy2.setHeightForWidth(programButton->sizePolicy().hasHeightForWidth());
+        programButton->setSizePolicy(sizePolicy2);
+        programButton->setMinimumSize(QSize(128, 28));
+
+        verticalLayout->addWidget(programButton);
+
+        settingButton = new QPushButton(boxNav);
+        settingButton->setObjectName(QString::fromUtf8("settingButton"));
+        sizePolicy2.setHeightForWidth(settingButton->sizePolicy().hasHeightForWidth());
+        settingButton->setSizePolicy(sizePolicy2);
+        settingButton->setMinimumSize(QSize(128, 28));
+        settingButton->setStyleSheet(QString::fromUtf8(""));
+
+        verticalLayout->addWidget(settingButton);
+
+
+        gridLayout->addWidget(boxNav, 0, 0, 1, 1);
+
+        boxMenu = new QFrame(centralwidget);
+        boxMenu->setObjectName(QString::fromUtf8("boxMenu"));
+        sizePolicy1.setHeightForWidth(boxMenu->sizePolicy().hasHeightForWidth());
+        boxMenu->setSizePolicy(sizePolicy1);
+        boxMenu->setFrameShape(QFrame::StyledPanel);
+        boxMenu->setFrameShadow(QFrame::Raised);
+        verticalLayout_2 = new QVBoxLayout(boxMenu);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        fullScreenButton = new QPushButton(boxMenu);
+        fullScreenButton->setObjectName(QString::fromUtf8("fullScreenButton"));
+        sizePolicy2.setHeightForWidth(fullScreenButton->sizePolicy().hasHeightForWidth());
+        fullScreenButton->setSizePolicy(sizePolicy2);
+        fullScreenButton->setMinimumSize(QSize(144, 32));
+
+        verticalLayout_2->addWidget(fullScreenButton);
+
+        closeButton = new QPushButton(boxMenu);
+        closeButton->setObjectName(QString::fromUtf8("closeButton"));
+        sizePolicy2.setHeightForWidth(closeButton->sizePolicy().hasHeightForWidth());
+        closeButton->setSizePolicy(sizePolicy2);
+        closeButton->setMinimumSize(QSize(144, 32));
+
+        verticalLayout_2->addWidget(closeButton);
+
+        fileManagerButton = new QPushButton(boxMenu);
+        fileManagerButton->setObjectName(QString::fromUtf8("fileManagerButton"));
+        sizePolicy2.setHeightForWidth(fileManagerButton->sizePolicy().hasHeightForWidth());
+        fileManagerButton->setSizePolicy(sizePolicy2);
+        fileManagerButton->setMinimumSize(QSize(144, 32));
+        fileManagerButton->setBaseSize(QSize(144, 32));
+
+        verticalLayout_2->addWidget(fileManagerButton);
+
+        dirDlgButton = new QPushButton(boxMenu);
+        dirDlgButton->setObjectName(QString::fromUtf8("dirDlgButton"));
+        sizePolicy2.setHeightForWidth(dirDlgButton->sizePolicy().hasHeightForWidth());
+        dirDlgButton->setSizePolicy(sizePolicy2);
+        dirDlgButton->setMinimumSize(QSize(144, 32));
+
+        verticalLayout_2->addWidget(dirDlgButton);
+
+        clearButton = new QPushButton(boxMenu);
+        clearButton->setObjectName(QString::fromUtf8("clearButton"));
+        sizePolicy2.setHeightForWidth(clearButton->sizePolicy().hasHeightForWidth());
+        clearButton->setSizePolicy(sizePolicy2);
+        clearButton->setMinimumSize(QSize(144, 32));
+
+        verticalLayout_2->addWidget(clearButton);
+
+        trashButton = new QPushButton(boxMenu);
+        trashButton->setObjectName(QString::fromUtf8("trashButton"));
+        sizePolicy2.setHeightForWidth(trashButton->sizePolicy().hasHeightForWidth());
+        trashButton->setSizePolicy(sizePolicy2);
+        trashButton->setMinimumSize(QSize(144, 32));
+
+        verticalLayout_2->addWidget(trashButton);
+
+        updateButton = new QPushButton(boxMenu);
+        updateButton->setObjectName(QString::fromUtf8("updateButton"));
+        sizePolicy2.setHeightForWidth(updateButton->sizePolicy().hasHeightForWidth());
+        updateButton->setSizePolicy(sizePolicy2);
+        updateButton->setMinimumSize(QSize(144, 32));
+
+        verticalLayout_2->addWidget(updateButton);
+
+
+        gridLayout->addWidget(boxMenu, 0, 3, 3, 1);
+
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
@@ -206,7 +236,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        testImg->setText(QCoreApplication::translate("MainWindow", "Wallpaper_Image", nullptr));
+        versionLabel->setText(QCoreApplication::translate("MainWindow", "<p>version 0.0.0.0</p>", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "by Zealot", nullptr));
         gameButton->setText(QCoreApplication::translate("MainWindow", "\320\234\320\260\321\201\320\273\320\270\320\275\320\260", nullptr));
         programButton->setText(QCoreApplication::translate("MainWindow", "\320\237\321\200\320\276\320\263\321\200\320\260\320\274\320\274\321\203\320\273\321\214\320\272\320\270", nullptr));
         settingButton->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
@@ -217,9 +248,6 @@ public:
         clearButton->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         trashButton->setText(QCoreApplication::translate("MainWindow", "Recycle.Bin", nullptr));
         updateButton->setText(QCoreApplication::translate("MainWindow", "Update Form", nullptr));
-        versionLabel->setText(QCoreApplication::translate("MainWindow", "<p>version 0.0.0.0</p>", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "by Zealot", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "TODO", nullptr));
     } // retranslateUi
 
 };

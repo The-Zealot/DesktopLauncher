@@ -4,12 +4,14 @@
 #include <QMainWindow>
 #include <QFileSystemModel>
 #include <QFile>
+#include <QDir>
 #include <QTreeView>
 #include <QListView>
 #include <QList>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonDocument>
+#include <QLabel>
 
 #include "optionsform.h"
 #include "filecontainer.h"
@@ -57,12 +59,12 @@ private:
     Ui::MainWindow *ui;
     OptionsForm* optionsForm;
     QFileSystemModel* model;
-    QFile* styleSheet;
     QListView* tree;
+    QWidget* movePanel;
+    QLabel* wallpaper;
 
     QList<FileContainer> files;
     QList<QPushButton*> links;
-    QPixmap* img;
     QString version;
     QPointF mousePos;
 };
