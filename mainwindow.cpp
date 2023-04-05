@@ -276,4 +276,3 @@ void MainWindow::on_clearButton_clicked()
     links.clear();
     tree->setVisible(false);
 }
-
