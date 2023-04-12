@@ -33,7 +33,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    image/backgroundImage.png
+    image/backgroundImage.png \
+    styles/dark.css \
 
 RESOURCES += \
     res.qrc
