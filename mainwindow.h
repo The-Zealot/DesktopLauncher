@@ -13,6 +13,7 @@
 #include <QJsonDocument>
 #include <QLabel>
 #include <QDesktopServices>
+#include <QFileIconProvider>
 
 #include "optionsform.h"
 #include "filecontainer.h"
@@ -62,6 +63,7 @@ private:
     Ui::MainWindow *ui;
     OptionsForm* _optionsForm;
     QFileSystemModel* _model;
+    QFileIconProvider* _fileIconProvider;
     QListView* _tree;
     QWidget* _movePanel;
     QLabel* _wallpaper;

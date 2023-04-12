@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->resize(1128, 720);
 
-    //on_updateButton_clicked();
+    on_updateButton_clicked();
 
     _movePanel = new QWidget(this);
     _movePanel->show();
@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     _wallpaper->show();
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
-    int buildNumber = 424;
+    int buildNumber = 439;
     _version = "version 2.0.2." + QVariant(buildNumber).toString();
     ui->versionLabel->setText(_version);
 
@@ -63,24 +63,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     //////// init graphic form ////////
 
+    _fileIconProvider = new QFileIconProvider;
+
     _tree = new QListView(this);
     _model = new QFileSystemModel(this);
-    _model->setFilter(QDir::AllDirs);
+    _model->setFilter(QDir::AllEntries);
+    _model->setRootPath("");
+    _model->setIconProvider(_fileIconProvider);
     _tree->setGeometry(10, 140, 750, 400);
     _tree->setVisible(false);
-    updateTree();
+    _tree->setModel(_model);
 
-
-    ////// Temp geometry (TODO) //////
-
-    /*ui->boxMenu->setGeometry(this->width() - ui->boxMenu->width(), 11,
-                             ui->boxMenu->width(), ui->boxMenu->height());
-
-    ui->signatureBox->setGeometry(this->width() - 11 - ui->signatureBox->width(),
-                                  this->height() - 11 - ui->signatureBox->height(),
-                                  ui->signatureBox->width(), ui->signatureBox->height());
-
-    connect(tree, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openDir(QModelIndex)));*/
+    connect(_tree, &QListView::doubleClicked, this, &MainWindow::openDir);
 }
 
 MainWindow::~MainWindow()
@@ -92,12 +86,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateTree()
 {
-    /*model = new QFileSystemModel;
-    model->setRootPath(QDir::currentPath());
-    ui->tree->setModel(model);*/
 
-    //model->setRootPath("");
-    _tree->setModel(_model);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
@@ -185,8 +174,10 @@ void MainWindow::openDir(const QModelIndex &index)
     }
     else if (fileInfo.isFile())
     {
-        QString str = tr("Упс! При открытии файла что-то пошло не так.");
-        QMessageBox::critical(this, "Error", str);
+        if (!QDesktopServices::openUrl(QUrl("file:///" + fileInfo.absoluteFilePath())))
+        {
+            QMessageBox::critical(this, "Ошибка", "Упс! При открытии файла что-то пошло не так.");
+        }
     }
 }
 
@@ -207,14 +198,6 @@ void MainWindow::on_fullScreenButton_clicked()
 
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
     _wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
-
-    /*ui->boxMenu->setGeometry(this->width() - 11 - ui->boxMenu->width(), 11,
-                             ui->boxMenu->width(), ui->boxMenu->height());
-
-    ui->signatureBox->setGeometry(this->width() - 11 - ui->signatureBox->width(),
-                                  this->height() - 11 - ui->signatureBox->height(),
-                                  ui->signatureBox->width(), ui->signatureBox->height());*/
-
 }
 
 void MainWindow::on_settingButton_clicked()
