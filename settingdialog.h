@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QXmlStreamWriter>
+#include <QListWidgetItem>
 #include <QFile>
 #include <QSet>
 
@@ -30,9 +31,12 @@ private slots:
 
     void on_saveButton_clicked();
 
+    void on_list_itemClicked(QListWidgetItem *item);
+
 private:
     void writeToXml(const QString fileName);
     void readFromXml(const QString fileName);
+    void updateForm();
 
     ///// version read /////
 

@@ -3,7 +3,6 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QStack>
 
 SettingDialog::SettingDialog(QWidget *parent) :
     QDialog(parent),
@@ -14,11 +13,7 @@ SettingDialog::SettingDialog(QWidget *parent) :
 
     readFromXml("./xml/template.xml");
 
-    for (auto & iter : _links)
-    {
-        ui->list->addItem(iter.name);
-        //qDebug() << iter.name << iter.dirName << iter.path << iter.isDefaultIcon << iter.icon;
-    }
+    updateForm();
 }
 
 SettingDialog::~SettingDialog()
@@ -49,42 +44,16 @@ void SettingDialog::on_browseButton_clicked()
 
 void SettingDialog::on_saveButton_clicked()
 {
+    VLink newLink;
+    newLink.name    = ui->nameEdit->text();
+    newLink.path    = ui->pathEdit->text();
+    newLink.dirName = ui->comboBox->currentText();
+    _links.append(newLink);
+    _dirs.insert(ui->comboBox->currentText());
+
     writeToXml("./xml/template.xml");
 
-    /*QFile file("settings.xml");
-    file.open(QIODevice::ReadWrite);
-
-    sWriter = new QXmlStreamWriter(&file);
-    sWriter->setAutoFormatting(true);
-    sWriter->writeStartDocument();
-    sWriter->writeStartElement("struct");
-    sWriter->writeAttribute("version", "1.2");
-
-    FileContainer temp;
-    temp.setDirName(ui->comboBox->currentText());
-    temp.setDirType("game");
-    temp.setFileName(ui->nameEdit->text());
-    temp.setFilePath(ui->pathEdit->text());
-    files.append(temp);
-
-    for (auto iter : files)
-    {
-        sWriter->writeStartElement("dir");
-        sWriter->writeAttribute("type", iter.dirType());
-        sWriter->writeAttribute("name", iter.dirName());
-        sWriter->writeStartElement("file");
-        sWriter->writeAttribute("path", iter.filePath());
-        sWriter->writeCharacters(iter.fileName());
-        sWriter->writeEndElement();
-        sWriter->writeEndElement();
-    }
-
-    sWriter->writeEndElement();
-    sWriter->writeEndDocument();
-    file.close();
-    delete sWriter;
-
-    ui->list->addItem(ui->pathEdit->text());*/
+    updateForm();
 }
 
 void SettingDialog::writeToXml(const QString fileName)
@@ -120,41 +89,6 @@ void SettingDialog::writeToXml(const QString fileName)
     sWriter.writeEndDocument();
 
     file.close();
-
-    /*QFile file(fileName);
-    file.open(QIODevice::WriteOnly);
-
-    sWriter = new QXmlStreamWriter(&file);
-    sWriter->setAutoFormatting(true);
-    sWriter->writeStartDocument();
-    sWriter->writeStartElement("struct");
-    sWriter->writeAttribute("version", "1.2");
-
-    FileContainer temp;
-    temp.setDirName(ui->comboBox->currentText());
-    temp.setDirType("game");
-    temp.setFileName(ui->nameEdit->text());
-    temp.setFilePath(ui->pathEdit->text());
-    files.append(temp);
-
-    for (auto iter : files)
-    {
-        sWriter->writeStartElement("dir");
-        sWriter->writeAttribute("type", iter.dirType());
-        sWriter->writeAttribute("name", iter.dirName());
-        sWriter->writeStartElement("file");
-        sWriter->writeAttribute("path", iter.filePath());
-        sWriter->writeCharacters(iter.fileName());
-        sWriter->writeEndElement();
-        sWriter->writeEndElement();
-    }
-
-    sWriter->writeEndElement();
-    sWriter->writeEndDocument();
-    file.close();
-    delete sWriter;
-
-    ui->list->addItem(ui->pathEdit->text());*/
 }
 
 void SettingDialog::readFromXml(const QString fileName)
@@ -204,11 +138,11 @@ void SettingDialog::read_v1(QXmlStreamReader &sReader)
             if (sReader.name().toString() == "link")
             {
                 VLink currentLink;
-                currentLink.path = sReader.attributes().value("path").toString();
-                currentLink.isDefaultIcon = QVariant(sReader.attributes().value("default").toString()).toBool();
-                currentLink.icon = sReader.attributes().value("icon").toString();
-                currentLink.name = sReader.readElementText();
-                currentLink.dirName = currentDir;
+                currentLink.path            = sReader.attributes().value("path").toString();
+                currentLink.isDefaultIcon   = QVariant(sReader.attributes().value("default").toString()).toBool();
+                currentLink.icon            = sReader.attributes().value("icon").toString();
+                currentLink.name            = sReader.readElementText();
+                currentLink.dirName         = currentDir;
 
                 _links.append(currentLink);
             }
@@ -216,4 +150,36 @@ void SettingDialog::read_v1(QXmlStreamReader &sReader)
     }
 }
 
+void SettingDialog::on_list_itemClicked(QListWidgetItem *item)
+{
+    VLink selectedLink;
+    selectedLink.name = item->text();
 
+    for (auto & iter : _links)
+    {
+        if (iter.name == selectedLink.name)
+        {
+            selectedLink.dirName        = iter.dirName;
+            selectedLink.path           = iter.path;
+            selectedLink.icon           = iter.icon;
+            selectedLink.isDefaultIcon  = iter.isDefaultIcon;
+        }
+    }
+
+    ui->nameEdit->setText(selectedLink.name);
+    ui->pathEdit->setText(selectedLink.path);
+    ui->comboBox->setCurrentText(selectedLink.dirName);
+}
+
+void SettingDialog::updateForm()
+{
+    for (auto & iter : _links)
+    {
+        ui->list->addItem(iter.name);
+    }
+
+    for (auto & iter : _dirs)
+    {
+        ui->comboBox->addItem(iter);
+    }
+}
