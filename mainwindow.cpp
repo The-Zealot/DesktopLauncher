@@ -63,16 +63,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     //////// init graphic form ////////
 
-    _fileIconProvider = new QFileIconProvider;
-//    _console = new Console(ui->workspacePanel);
-    _tree = new QListView(ui->workspacePanel);
-    _model = new QFileSystemModel(this);
+    _fileIconProvider   = new QFileIconProvider;
+    _console            = new ConsoleWidget(this);
+    _tree               = new QListView(this);
+    _model              = new QFileSystemModel(this);
+
     _model->setFilter(QDir::AllEntries);
     _model->setRootPath("");
     _model->setIconProvider(_fileIconProvider);
     _tree->setGeometry(10, 140, 750, 400);
     _tree->setVisible(false);
     _tree->setModel(_model);
+    _console->setGeometry(10, 547, 750, 120);
+    _console->setVisible(false);
 
     connect(_tree, &QListView::doubleClicked, this, &MainWindow::openDir);
 }
@@ -82,6 +85,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete _model;
     delete _tree;
+    delete _fileIconProvider;
 }
 
 void MainWindow::updateTree()

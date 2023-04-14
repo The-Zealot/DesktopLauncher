@@ -16,6 +16,7 @@
 
 #include "optionsform.h"
 #include "filecontainer.h"
+#include "consolewidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -64,7 +65,7 @@ private:
     QFileSystemModel* _model;
     QFileIconProvider* _fileIconProvider;
     QListView* _tree;
-//    ConsoleWidget* _console;
+    ConsoleWidget* _console;
     QWidget* _movePanel;
     QLabel* _wallpaper;
 
