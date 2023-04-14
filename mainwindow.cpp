@@ -16,8 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
-
     this->resize(1128, 720);
+
+    readJson();
 
     on_updateButton_clicked();
 
@@ -36,30 +37,9 @@ MainWindow::MainWindow(QWidget *parent)
     _wallpaper->show();
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
-    int buildNumber = 439;
+    int buildNumber = 451;
     _version = "version 2.0.2." + QVariant(buildNumber).toString();
     ui->versionLabel->setText(_version);
-
-    //////// init settings ////////
-
-    QJsonObject jObject;
-
-    QFile config("./config.json");
-    if (config.open(QIODevice::ReadOnly))
-    {
-        QJsonDocument jDoc;
-        jDoc.fromJson(config.readAll());
-        jDoc.setObject(jObject);
-        config.close();
-    }
-    else
-    {
-#ifndef QT_DEBUG
-        QMessageBox::critical(this, "Error", "Reading configuration file error!");
-#else
-        qDebug() << "Reading configuration file error!";
-#endif
-    }
 
     //////// init graphic form ////////
 
@@ -266,4 +246,60 @@ void MainWindow::on_clearButton_clicked()
 
     _links.clear();
     _tree->setVisible(false);
+}
+
+void MainWindow::writeJson()
+{
+    QFile config("./config.json");
+    if (config.open(QIODevice::WriteOnly))
+    {
+        QJsonObject jObject;
+
+        jObject["autostart"]        = _jsonConfig.hasAutoStart;
+        jObject["fullscreen"]       = _jsonConfig.isFullscreen;
+        jObject["buttonIcons"]      = _jsonConfig.hasButtonIcons;
+        jObject["defaultImage"]     = _jsonConfig.isDefaultWallpaper;
+        jObject["background"]       = _jsonConfig.wallpaperImage;
+        jObject["startDirectory"]   = _jsonConfig.startDirectory;
+        jObject["style"]            = _jsonConfig.currentStyle;
+
+        config.write(QJsonDocument(jObject).toJson());
+        config.close();
+    }
+    else
+    {
+#ifndef QT_DEBUG
+        QMessageBox::warning(this, "Warning", "Can't open config.json to write!");
+#else
+        qDebug() << "Can't open config.json to write!";
+#endif
+    }
+}
+
+void MainWindow::readJson()
+{
+    QFile config("./config.json");
+    if (config.open(QIODevice::ReadOnly))
+    {
+        QJsonObject jObject;
+        QJsonDocument::fromJson(config.readAll()).setObject(jObject);
+        config.close();
+
+        _jsonConfig.hasAutoStart        = jObject["autostart"].toBool();
+        _jsonConfig.hasButtonIcons      = jObject["buttonIcons"].toBool();
+        _jsonConfig.isFullscreen        = jObject["fullscreen"].toBool();
+        _jsonConfig.isDefaultWallpaper  = jObject["defaultImage"].toBool();
+
+        _jsonConfig.wallpaperImage      = jObject["background"].toString();
+        _jsonConfig.startDirectory      = jObject["starDirectory"].toString();
+        _jsonConfig.currentStyle        = jObject["style"].toString();
+    }
+    else
+    {
+#ifndef QT_DEBUG
+        QMessageBox::critical(this, "Error", "Reading configuration file error!");
+#else
+        qDebug() << "Reading configuration file error!";
+#endif
+    }
 }

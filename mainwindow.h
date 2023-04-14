@@ -15,7 +15,7 @@
 #include <QFileIconProvider>
 
 #include "optionsform.h"
-#include "filecontainer.h"
+#include "jsonfile.h"
 #include "consolewidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -58,6 +58,8 @@ private:
     bool pointCointains(QWidget* widget, QPointF &point);
     void createLink(QPoint position, const QString text, const QString path);
     void openDir(const QModelIndex &index);
+    void writeJson();
+    void readJson();
 
 private:
     Ui::MainWindow *ui;
@@ -69,9 +71,9 @@ private:
     QWidget* _movePanel;
     QLabel* _wallpaper;
 
-    QList<FileContainer> _files;
     QList<QPushButton*> _links;
     QString _version;
     QPointF _mousePos;
+    JsonConfig _jsonConfig;
 };
 #endif // MAINWINDOW_H
