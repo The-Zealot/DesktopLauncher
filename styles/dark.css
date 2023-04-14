@@ -53,6 +53,9 @@ QHeaderView:section {
 	text-align: center;
 	padding-left: 4px;
 }
+
+/*----------------------------------- QCheckBox -----------------------------------*/
+
 QCheckBox {
 	background: rgba(0, 0, 0, 0);
 	border-radius: 8px;
@@ -77,6 +80,9 @@ QCheckBox::indicator:checked {
     color: white;
     border: 1px solid #5A5A5A;
 }
+
+/*----------------------------------- QComboBox -----------------------------------*/
+
 QComboBox {
 	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
 	border-radius: 4px;
@@ -84,13 +90,13 @@ QComboBox {
 	color: white;
 }
 QComboBox:drop-down {
-	background: qlineargradient(x1:0, y2:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
+        background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0#585858, stop: 1  #404040);
 	border-radius: 2px;
 	width: 20%;
 }
 QComboBox:down-arrow {
 	/*background: #676767;*/
-	image: url(/image/checked.png);
+        image: url(./image/down-arrow.png);
 	width: 8px;
 	height: 8px;
 }
@@ -109,3 +115,47 @@ QListView:item {
 QLabel {
     color: white;
 }
+QListView {
+    background: rgb(20, 20, 20);
+}
+
+/*----------------------------------- QScrollBar -----------------------------------*/
+
+QScrollBar {
+    background: qlineargradient(x1:0, y1:0, x2:0.5, y2:0, x3:1, y3:0, stop:0 #313131, stop:0.5 #383838, stop:1 #313131);
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #727272;
+    border-radius: 8px;
+    min-height: 0px;
+}
+QScrollBar::handle {
+    margin: 2px 2px 2px 2px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #565656, stop:1 #3c3c3c);
+    border-radius: 5px;
+    border: 1px solid #828282;
+}
+QScrollBar::sub-line:vertical {
+    /*border: 1px solid;
+    border-image: url(./image/up-arrow.png);*/
+    background: none;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+    width: 0px;
+    height: 0px;
+}
+QScrollBar::add-line {
+    /*margin: 0px 0px 0px 0px;*/
+    /*background: qlineargradient(x1:0, y1:0, x2:0.5, y2:0, x3:1, y3:0, stop:0 #313131, stop:0.5 #383838, stop:1 #313131);*/
+    /*border-image: url(./image/down-arrow.png);
+    border: 1px solid;*/
+    background: none;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+    width: 0px;
+    height: 0px;
+}
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: qlineargradient(x1:0, y1:0, x2:0.5, y2:0, x3:1, y3:0, stop:0 #313131, stop:0.5 #383838, stop:1 #313131);
+    background: none;
+}
+
