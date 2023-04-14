@@ -7,7 +7,6 @@
 #include <QFile>
 #include <QSet>
 
-#include "filecontainer.h"
 #include "vlink.h"
 
 namespace Ui {
