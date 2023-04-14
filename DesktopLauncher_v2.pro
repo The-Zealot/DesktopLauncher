@@ -10,7 +10,6 @@ CONFIG += c++11
 
 SOURCES += \
     consolewidget.cpp \
-    filecontainer.cpp \
     main.cpp \
     mainwindow.cpp \
     optionsform.cpp \
@@ -18,7 +17,7 @@ SOURCES += \
 
 HEADERS += \
     consolewidget.h \
-    filecontainer.h \
+    jsonfile.h \
     mainwindow.h \
     optionsform.h \
     settingdialog.h \
