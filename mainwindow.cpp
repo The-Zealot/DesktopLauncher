@@ -64,8 +64,8 @@ MainWindow::MainWindow(QWidget *parent)
     //////// init graphic form ////////
 
     _fileIconProvider = new QFileIconProvider;
-
-    _tree = new QListView(this);
+//    _console = new Console(ui->workspacePanel);
+    _tree = new QListView(ui->workspacePanel);
     _model = new QFileSystemModel(this);
     _model->setFilter(QDir::AllEntries);
     _model->setRootPath("");

@@ -5,7 +5,6 @@
 #include <QFileSystemModel>
 #include <QFile>
 #include <QDir>
-#include <QTreeView>
 #include <QListView>
 #include <QList>
 #include <QJsonObject>
@@ -65,6 +64,7 @@ private:
     QFileSystemModel* _model;
     QFileIconProvider* _fileIconProvider;
     QListView* _tree;
+//    ConsoleWidget* _console;
     QWidget* _movePanel;
     QLabel* _wallpaper;
 
