@@ -18,7 +18,7 @@ class SettingDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingDialog(QWidget *parent = nullptr);
+    explicit SettingDialog(QList<VLink*>* links, QWidget *parent = nullptr);
     ~SettingDialog();
 
 private slots:
@@ -46,7 +46,7 @@ private:
 
     QXmlStreamWriter* _sWriter;
     QXmlStreamReader* _sReader;
-    QList<VLink> _links;
+    QList<VLink*>* _links;
     QSet<QString> _dirs;
 };
 

@@ -4,12 +4,14 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-SettingDialog::SettingDialog(QWidget *parent) :
+SettingDialog::SettingDialog(QList<VLink*>* links, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingDialog)
 {
     ui->setupUi(this);
     this->setFixedSize(this->size());
+
+    _links = links;
 
     readFromXml("./xml/template.xml");
 
@@ -44,11 +46,11 @@ void SettingDialog::on_browseButton_clicked()
 
 void SettingDialog::on_saveButton_clicked()
 {
-    VLink newLink;
-    newLink.name    = ui->nameEdit->text();
-    newLink.path    = ui->pathEdit->text();
-    newLink.dirName = ui->comboBox->currentText();
-    _links.append(newLink);
+    VLink* newLink = new VLink;
+    newLink->name    = ui->nameEdit->text();
+    newLink->path    = ui->pathEdit->text();
+    newLink->dirName = ui->comboBox->currentText();
+    _links->append(newLink);
     _dirs.insert(ui->comboBox->currentText());
 
     writeToXml("./xml/template.xml");
@@ -71,15 +73,15 @@ void SettingDialog::writeToXml(const QString fileName)
     {
         sWriter.writeStartElement("dir");
         sWriter.writeAttribute("name", iter);
-        for (auto & it : _links)
+        for (auto & it : *_links)
         {
-            if (it.dirName == iter)
+            if (it->dirName == iter)
             {
                 sWriter.writeStartElement("link");
-                sWriter.writeAttribute("path", it.path);
-                sWriter.writeAttribute("default", QVariant(it.isDefaultIcon).toString());
-                sWriter.writeAttribute("icon", it.icon);
-                sWriter.writeCharacters(it.name);
+                sWriter.writeAttribute("path", it->path);
+                sWriter.writeAttribute("default", QVariant(it->isDefaultIcon).toString());
+                sWriter.writeAttribute("icon", it->icon);
+                sWriter.writeCharacters(it->name);
                 sWriter.writeEndElement();
             }
         }
@@ -137,14 +139,14 @@ void SettingDialog::read_v1(QXmlStreamReader &sReader)
             }
             if (sReader.name().toString() == "link")
             {
-                VLink currentLink;
-                currentLink.path            = sReader.attributes().value("path").toString();
-                currentLink.isDefaultIcon   = QVariant(sReader.attributes().value("default").toString()).toBool();
-                currentLink.icon            = sReader.attributes().value("icon").toString();
-                currentLink.name            = sReader.readElementText();
-                currentLink.dirName         = currentDir;
+                VLink* currentLink = new VLink;
+                currentLink->path            = sReader.attributes().value("path").toString();
+                currentLink->isDefaultIcon   = QVariant(sReader.attributes().value("default").toString()).toBool();
+                currentLink->icon            = sReader.attributes().value("icon").toString();
+                currentLink->name            = sReader.readElementText();
+                currentLink->dirName         = currentDir;
 
-                _links.append(currentLink);
+                _links->append(currentLink);
             }
         }
     }
@@ -155,14 +157,14 @@ void SettingDialog::on_list_itemClicked(QListWidgetItem *item)
     VLink selectedLink;
     selectedLink.name = item->text();
 
-    for (auto & iter : _links)
+    for (auto & iter : *_links)
     {
-        if (iter.name == selectedLink.name)
+        if (iter->name == selectedLink.name)
         {
-            selectedLink.dirName        = iter.dirName;
-            selectedLink.path           = iter.path;
-            selectedLink.icon           = iter.icon;
-            selectedLink.isDefaultIcon  = iter.isDefaultIcon;
+            selectedLink.dirName        = iter->dirName;
+            selectedLink.path           = iter->path;
+            selectedLink.icon           = iter->icon;
+            selectedLink.isDefaultIcon  = iter->isDefaultIcon;
         }
     }
 
@@ -173,9 +175,9 @@ void SettingDialog::on_list_itemClicked(QListWidgetItem *item)
 
 void SettingDialog::updateForm()
 {
-    for (auto & iter : _links)
+    for (auto & iter : *_links)
     {
-        ui->list->addItem(iter.name);
+        ui->list->addItem(iter->name);
     }
 
     for (auto & iter : _dirs)

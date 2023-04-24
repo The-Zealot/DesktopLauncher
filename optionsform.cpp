@@ -20,6 +20,11 @@ OptionsForm::~OptionsForm()
     delete ui;
 }
 
+void OptionsForm::setLinkList(QList<VLink*> &links)
+{
+    _links = &links;
+}
+
 
 void OptionsForm::on_backButton_clicked()
 {
@@ -36,7 +41,7 @@ void OptionsForm::on_OptionsForm_finished(int result)
 
 void OptionsForm::on_gameSettings_clicked()
 {
-    settingDialog = new SettingDialog(this);
+    settingDialog = new SettingDialog(_links, this);
     settingDialog->show();
 }
 

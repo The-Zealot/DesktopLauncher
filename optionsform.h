@@ -9,6 +9,7 @@
 #include <QJsonDocument>
 
 #include "settingdialog.h"
+#include "vlink.h"
 
 namespace Ui {
 class OptionsForm;
@@ -21,6 +22,8 @@ class OptionsForm : public QDialog
 public:
     explicit OptionsForm(QWidget *parent = nullptr);
     ~OptionsForm();
+
+    void setLinkList(QList<VLink*> &links);
 
 private slots:
 
@@ -40,6 +43,8 @@ private:
 private:
     Ui::OptionsForm *ui;
     SettingDialog* settingDialog;
+
+    QList<VLink*>* _links;
 
     friend class MainWindow;
 };
