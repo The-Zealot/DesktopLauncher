@@ -15,8 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QPixmap pixmap(":/image/background.png");
+
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
-    this->resize(1128, 720);
+    this->resize(pixmap.size());
 
     readJson();
 
@@ -33,11 +35,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     _wallpaper = new QLabel(this);
     _wallpaper->lower();
-    _wallpaper->setPixmap(QPixmap(":/image/background.png").scaled(this->size()));
+    _wallpaper->setPixmap(pixmap.scaled(this->size()));
     _wallpaper->show();
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
-    int buildNumber = 451;
+    int buildNumber = 458;
     _version = "version 2.0.2." + QVariant(buildNumber).toString();
     ui->versionLabel->setText(_version);
 
@@ -129,13 +131,13 @@ void MainWindow::createLink(QPoint position, const QString text, const QString p
 {
     QPushButton* temp = new QPushButton(ui->workspacePanel);
 
-    temp->setGeometry(position.x(), position.y(), 144, 32);
+    temp->setGeometry(position.x(), position.y(), 96, 32);
     temp->setVisible(true);
     temp->setText(text);
     temp->setToolTip(path);
     temp->connect(temp, &QPushButton::clicked, this, &MainWindow::linkClicked);
 
-    _links.push_back(temp);
+    _buttons.push_back(temp);
 }
 
 void MainWindow::openDir(const QModelIndex &index)
@@ -188,6 +190,7 @@ void MainWindow::on_settingButton_clicked()
 {
     _optionsForm = new OptionsForm(this);
     _optionsForm->setModal(true);
+    _optionsForm->setLinkList(_links);
     _optionsForm->show();
 }
 
@@ -223,28 +226,33 @@ void MainWindow::on_updateButton_clicked()
 
 void MainWindow::on_gameButton_clicked()
 {
-    if (_links.size() != 0)
+    if (_buttons.size() != 0)
         return;
 
-    int buttonNumber = 0;
+    int height  = 32;
+    int width   = 96;
+    int offset  = 8;
 
-    for (int i = 0; i < 7; ++i)
+    int size = _links.size();
+    for (int i = 0, row = 0, column = 0; i < size; i++)
     {
-        for (int j = 0; j < 4; ++j)
+        if (column >= 5)
         {
-            QString temp = QVariant(++buttonNumber).toString();
-            QString path = "C:/Program Files/Far Manager/Far.exe";
-            createLink(QPoint(144 * j, 32 * i), "Test " + temp, path);
+            column = 0;
+            row++;
         }
+        column++;
+
+        createLink(QPoint((width + offset) * column, (height + offset) * row), _links.at(i)->name, _links.at(i)->path);
     }
 }
 
 void MainWindow::on_clearButton_clicked()
 {
-    for (auto iter : _links)
+    for (auto iter : _buttons)
         delete iter;
 
-    _links.clear();
+    _buttons.clear();
     _tree->setVisible(false);
 }
 
