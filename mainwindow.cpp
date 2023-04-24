@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     readJson();
 
+    SettingDialog::readFromXml("xml/template.xml", &_links, _dirs);
+
     on_updateButton_clicked();
 
     _movePanel = new QWidget(this);
@@ -39,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     _wallpaper->show();
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
-    int buildNumber = 458;
+    int buildNumber = 461;
     _version = "version 2.0.2." + QVariant(buildNumber).toString();
     ui->versionLabel->setText(_version);
 

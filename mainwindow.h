@@ -74,6 +74,7 @@ private:
 
     QList<QPushButton*> _buttons;
     QList<VLink*> _links;
+    QSet<QString> _dirs;
     QString _version;
     QPointF _mousePos;
     JsonConfig _jsonConfig;
