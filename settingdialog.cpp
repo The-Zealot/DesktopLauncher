@@ -13,7 +13,7 @@ SettingDialog::SettingDialog(QList<VLink*>* links, QWidget *parent) :
 
     _links = links;
 
-    readFromXml("./xml/template.xml");
+    readFromXml("./xml/template.xml", _links, _dirs);
 
     updateForm();
 }
@@ -53,12 +53,12 @@ void SettingDialog::on_saveButton_clicked()
     _links->append(newLink);
     _dirs.insert(ui->comboBox->currentText());
 
-    writeToXml("./xml/template.xml");
+    writeToXml("./xml/template.xml", _links, _dirs);
 
     updateForm();
 }
 
-void SettingDialog::writeToXml(const QString fileName)
+void SettingDialog::writeToXml(const QString fileName, QList<VLink*>* links, QSet<QString> &dirs)
 {
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
@@ -69,11 +69,11 @@ void SettingDialog::writeToXml(const QString fileName)
     sWriter.writeStartElement("struct");
     sWriter.writeAttribute("version", "1.2");
 
-    for (auto & iter : _dirs)
+    for (auto & iter : dirs)
     {
         sWriter.writeStartElement("dir");
         sWriter.writeAttribute("name", iter);
-        for (auto & it : *_links)
+        for (auto & it : *links)
         {
             if (it->dirName == iter)
             {
@@ -93,12 +93,18 @@ void SettingDialog::writeToXml(const QString fileName)
     file.close();
 }
 
-void SettingDialog::readFromXml(const QString fileName)
+void SettingDialog::readFromXml(const QString fileName, QList<VLink*>* links, QSet<QString> &dirs)
 {
+    for (auto & iter : *links)
+    {
+        delete iter;
+    }
+    links->clear();
+
     QFile file(fileName);
     file.open(QIODevice::ReadOnly);
     QXmlStreamReader sReader(&file);
-    read_v1(sReader);
+    read_v1(sReader, links, dirs);
     file.close();
 
         /* if (sReader.isStartElement())
@@ -122,7 +128,7 @@ void SettingDialog::readFromXml(const QString fileName)
 */
 }
 
-void SettingDialog::read_v1(QXmlStreamReader &sReader)
+void SettingDialog::read_v1(QXmlStreamReader &sReader, QList<VLink*>* links, QSet<QString> &dirs)
 {
     QString currentDir;
 
@@ -134,7 +140,7 @@ void SettingDialog::read_v1(QXmlStreamReader &sReader)
             if (sReader.name().toString() == "dir")
             {
                 currentDir = sReader.attributes().value("name").toString();
-                _dirs.insert(currentDir);
+                dirs.insert(currentDir);
                 continue;
             }
             if (sReader.name().toString() == "link")
@@ -146,7 +152,7 @@ void SettingDialog::read_v1(QXmlStreamReader &sReader)
                 currentLink->name            = sReader.readElementText();
                 currentLink->dirName         = currentDir;
 
-                _links->append(currentLink);
+                links->append(currentLink);
             }
         }
     }
@@ -175,6 +181,9 @@ void SettingDialog::on_list_itemClicked(QListWidgetItem *item)
 
 void SettingDialog::updateForm()
 {
+    ui->comboBox->clear();
+    ui->list->clear();
+
     for (auto & iter : *_links)
     {
         ui->list->addItem(iter->name);
