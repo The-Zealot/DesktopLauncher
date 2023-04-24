@@ -17,6 +17,7 @@
 #include "optionsform.h"
 #include "jsonfile.h"
 #include "consolewidget.h"
+#include "vlink.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -71,7 +72,8 @@ private:
     QWidget* _movePanel;
     QLabel* _wallpaper;
 
-    QList<QPushButton*> _links;
+    QList<QPushButton*> _buttons;
+    QList<VLink*> _links;
     QString _version;
     QPointF _mousePos;
     JsonConfig _jsonConfig;
