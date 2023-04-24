@@ -32,20 +32,22 @@ private slots:
 
     void on_list_itemClicked(QListWidgetItem *item);
 
+public:
+    static void writeToXml(const QString fileName, QList<VLink*>* links, QSet<QString> &dirs);
+    static void readFromXml(const QString fileName, QList<VLink*>* links, QSet<QString> &dirs);
+
 private:
-    void writeToXml(const QString fileName);
-    void readFromXml(const QString fileName);
     void updateForm();
 
     ///// version read /////
 
-    void read_v1(QXmlStreamReader &reader);                 // struct version 1.x
+    static void read_v1(QXmlStreamReader &readerm, QList<VLink*>* links, QSet<QString> &dirs);                 // struct version 1.x
 
 private:
     Ui::SettingDialog *ui;
 
-    QXmlStreamWriter* _sWriter;
-    QXmlStreamReader* _sReader;
+//    QXmlStreamWriter* _sWriter;
+//    QXmlStreamReader* _sReader;
     QList<VLink*>* _links;
     QSet<QString> _dirs;
 };
