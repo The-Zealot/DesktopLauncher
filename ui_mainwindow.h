@@ -44,7 +44,6 @@ public:
     QFrame *boxNav;
     QVBoxLayout *verticalLayout;
     QPushButton *gameButton;
-    QPushButton *programButton;
     QPushButton *settingButton;
     QFrame *workspacePanel;
 
@@ -193,14 +192,6 @@ public:
 
         verticalLayout->addWidget(gameButton);
 
-        programButton = new QPushButton(boxNav);
-        programButton->setObjectName(QString::fromUtf8("programButton"));
-        sizePolicy1.setHeightForWidth(programButton->sizePolicy().hasHeightForWidth());
-        programButton->setSizePolicy(sizePolicy1);
-        programButton->setMinimumSize(QSize(128, 28));
-
-        verticalLayout->addWidget(programButton);
-
         settingButton = new QPushButton(boxNav);
         settingButton->setObjectName(QString::fromUtf8("settingButton"));
         sizePolicy1.setHeightForWidth(settingButton->sizePolicy().hasHeightForWidth());
@@ -215,6 +206,11 @@ public:
 
         workspacePanel = new QFrame(centralwidget);
         workspacePanel->setObjectName(QString::fromUtf8("workspacePanel"));
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(workspacePanel->sizePolicy().hasHeightForWidth());
+        workspacePanel->setSizePolicy(sizePolicy3);
         workspacePanel->setFrameShape(QFrame::StyledPanel);
         workspacePanel->setFrameShadow(QFrame::Raised);
 
@@ -239,8 +235,7 @@ public:
         updateButton->setText(QCoreApplication::translate("MainWindow", "Update Form", nullptr));
         versionLabel->setText(QCoreApplication::translate("MainWindow", "<p>version 0.0.0.0</p>", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "by Zealot", nullptr));
-        gameButton->setText(QCoreApplication::translate("MainWindow", "\320\234\320\260\321\201\320\273\320\270\320\275\320\260", nullptr));
-        programButton->setText(QCoreApplication::translate("MainWindow", "\320\237\321\200\320\276\320\263\321\200\320\260\320\274\320\274\321\203\320\273\321\214\320\272\320\270", nullptr));
+        gameButton->setText(QCoreApplication::translate("MainWindow", "\320\237\321\200\320\270\320\273\320\276\320\266\320\265\320\275\320\270\321\217", nullptr));
         settingButton->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
     } // retranslateUi
 

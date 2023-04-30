@@ -297,26 +297,7 @@
           <string notr="true"/>
          </property>
          <property name="text">
-          <string>Маслина</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="programButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>128</width>
-           <height>28</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Программульки</string>
+          <string>Приложения</string>
          </property>
         </widget>
        </item>
@@ -347,6 +328,12 @@
     </item>
     <item row="1" column="0" rowspan="3" colspan="2">
      <widget class="QFrame" name="workspacePanel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
