@@ -170,3 +170,10 @@ QScrollBar::add-line:vertical {
 QScrollBar::add-page, QScrollBar::sub-page {
     background: none;
 }
+QMenu {
+    color: white;
+    background: #141414;
+}
+QMenu::selected {
+    background: rgb(18, 32, 44);
+}
