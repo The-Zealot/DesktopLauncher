@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     _wallpaper->show();
     _wallpaper->setGeometry(0, 0, this->width(), this->height());
 
-    int buildNumber = 461;
+    int buildNumber = 466;
     _version = "version 2.0.2." + QVariant(buildNumber).toString();
     ui->versionLabel->setText(_version);
 
@@ -60,6 +60,16 @@ MainWindow::MainWindow(QWidget *parent)
     _tree->setModel(_model);
     _console->setGeometry(10, 547, 750, 120);
     _console->setVisible(false);
+
+    QMenu* menu = new QMenu(this);
+    for (auto & iter : _dirs)
+    {
+        menu->addAction(iter, [this, &iter](){
+            _currentDir = iter;
+            on_gameButton_clicked();
+        });
+    }
+    ui->gameButton->setMenu(menu);
 
     connect(_tree, &QListView::doubleClicked, this, &MainWindow::openDir);
 }
@@ -229,7 +239,13 @@ void MainWindow::on_updateButton_clicked()
 void MainWindow::on_gameButton_clicked()
 {
     if (_buttons.size() != 0)
-        return;
+    {
+        for (auto & iter : _buttons)
+        {
+            delete iter;
+        }
+        _buttons.clear();
+    }
 
     int height  = 32;
     int width   = 96;
@@ -238,14 +254,17 @@ void MainWindow::on_gameButton_clicked()
     int size = _links.size();
     for (int i = 0, row = 0, column = 0; i < size; i++)
     {
-        if (column >= 5)
+        if (_links.at(i)->dirName == _currentDir)
         {
-            column = 0;
-            row++;
-        }
-        column++;
+            if (column >= 5)
+            {
+                column = 0;
+                row++;
+            }
+            column++;
 
-        createLink(QPoint((width + offset) * column, (height + offset) * row), _links.at(i)->name, _links.at(i)->path);
+            createLink(QPoint((width + offset) * column, (height + offset) * row), _links.at(i)->name, _links.at(i)->path);
+        }
     }
 }
 

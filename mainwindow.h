@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QDesktopServices>
 #include <QFileIconProvider>
+#include <QMenu>
 
 #include "optionsform.h"
 #include "jsonfile.h"
@@ -75,6 +76,7 @@ private:
     QList<QPushButton*> _buttons;
     QList<VLink*> _links;
     QSet<QString> _dirs;
+    QString _currentDir;
     QString _version;
     QPointF _mousePos;
     JsonConfig _jsonConfig;
